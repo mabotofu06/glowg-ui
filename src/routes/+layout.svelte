@@ -1,21 +1,32 @@
-<header class="bg-white text-lime-700 text-4xl p-4 border-b-2 border-lime-700">
-
+<header class="bg-white text-lime-700 text-4xl p-6 border-b border-lime-700">
 	<h1>
 	<svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 inline-block mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
 		<path d="M12 2L2 7l10 5 10-5L12 2z"></path>
 		<path d="M2 17l10 5 10-5V7L12 12 2 7v10z"></path>
 	</svg>
-	Glowg
+	<span style="font-family: 'Segoe Print', cursive;">glowG</span>
 	</h1>
 </header>
 
-<main class="flex h-full p-4">
-	<div class="flex flex-col border-r-2 border-lime-700 pr-4 ">
-		<div class="w-18 h-18 bg-lime-300 rounded-full mb-5"></div>
-		<div class="w-18 h-18 bg-lime-300 rounded-full mb-5"></div>
-		<div class="w-18 h-18 bg-lime-300 rounded-full mb-5"></div>
-		<div class="w-18 h-18 bg-lime-300 rounded-full mb-5"></div>
+<main class="flex h-full">
+	<!-- svelte-ignore a11y_no_static_element_interactions -->
+	<div class="flex flex-col border-r-2 border-lime-700 px-5 pt-5">
+
+		{#each MENU_LIST as menu}
+		<!-- svelte-ignore a11y_click_events_have_key_events -->
+		<!-- svelte-ignore event_directive_deprecated -->
+		<div
+			class="flex justify-center items-center w-18 h-18 bg-lime-300 rounded-full mb-5 text-green-700"
+			on:click={() => onMenuClick(menu.path)}
+		>
+			<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-8">
+				<path stroke-linecap="round" stroke-linejoin="round" d={menu.path_d} />
+			</svg>
+		</div>
+		{/each}
+
 	</div>
+
 	<div class="timeline w-full">
 		{@render children()}
 	</div>
@@ -25,6 +36,18 @@
 	import '../app.css';
 	
 	let { children } = $props();
+
+
+	const onMenuClick = (path: string) => {
+		window.location.href = path
+	};
+
+	const MENU_LIST = [
+		{label:'Home'           , path:'/'               , path_d: 'm2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25'},
+		{label:'フォローした投稿', path:'/follow'         , path_d: 'M2.25 12.75V12A2.25 2.25 0 0 1 4.5 9.75h15A2.25 2.25 0 0 1 21.75 12v.75m-8.69-6.44-2.12-2.12a1.5 1.5 0 0 0-1.061-.44H4.5A2.25 2.25 0 0 0 2.25 6v12a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9a2.25 2.25 0 0 0-2.25-2.25h-5.379a1.5 1.5 0 0 1-1.06-.44Z'},
+		{label:'おしらせ'       , path:'/info'           , path_d: 'M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0'},
+		{label:'アカウント'     , path:'/user/@test_user', path_d: 'M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z'},
+	]
 </script>
 
 <style>

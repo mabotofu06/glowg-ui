@@ -21,44 +21,36 @@
 
   <div class="mt-10 mx-20">
     <div class="flex border-b border-gray-300 mb-4">
-      <button
-        class="px-6 py-2 focus:outline-none"
-        class:selected={activeTab === 'posts'}
-        on:click={() => activeTab = 'posts'}
-      >
-        すべての投稿
-      </button>
-      <button
-        class="px-6 py-2 focus:outline-none"
-        class:selected={activeTab === 'likes'}
-        on:click={() => activeTab = 'likes'}
-      >
-        作業中のログ
-      </button>
-      <button
-        class="px-6 py-2 focus:outline-none"
-        class:selected={activeTab === 'likes'}
-        on:click={() => activeTab = 'likes'}
-      >
-        作業終了したログ
-      </button>
-      <button
-        class="px-6 py-2 focus:outline-none"
-        class:selected={activeTab === 'likes'}
-        on:click={() => activeTab = 'likes'}
-      >
-        フォロー中の作業ログ
-      </button>
+      {#each MENU_LIST as menu}
+        <button
+          class={"px-6 py-2 focus:outline-none" + (activeTab === menu.code ? '  text-lime-500 border-b-2 border-lime-500' : '  text-gray-500')}
+          class:selected={activeTab === menu.code}
+          on:click={() => activeTab = menu.code}
+        >
+          {menu.label}
+        </button>
+      {/each}
     </div>
-    {#if activeTab === 'posts'}
+
+    <div class="min-h-130">
+    {#if activeTab === '0000'}
+      {#each [1,2,3,4,5] as num}
+        <PostCard/>
+      {/each}
+    {:else if activeTab === '0001'}
       <div>
-        投稿タブの内容
+        作業中の内容
       </div>
-    {:else if activeTab === 'likes'}
+    {:else if activeTab === '0002'}
+      <div>
+        作業終了の内容
+      </div>
+    {:else if activeTab === '0003'}
       <div>
         いいねタブの内容
       </div>
     {/if}
+    </div>
   </div>
 
 
@@ -67,11 +59,19 @@
 <script lang="ts">
   import { onMount } from 'svelte';
   import { page } from '$app/stores';
+    import PostCard from '$lib/components/molecules/PostCard.svelte';
  
   let selectedDate = new Date();
   let userId: string;
-  let activeTab: 'posts' | 'likes' = 'posts';
+  let activeTab: string = '0000';
 
   $: userId = $page.params.id;
+
+  const MENU_LIST = [
+    { label: 'すべての投稿', code: '0000' },
+    { label: '作業中の投稿', code: '0001' },
+    { label: '作業終了した投稿', code: '0002' },
+    { label: 'フォロー中の作業投稿', code: '0003' }
+  ];
 
 </script>
