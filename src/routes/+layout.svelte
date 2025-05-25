@@ -10,7 +10,7 @@
 
 <main class="flex h-full">
 	<!-- svelte-ignore a11y_no_static_element_interactions -->
-	<div class="flex flex-col border-r-2 border-lime-700 px-5 pt-5">
+	<div class="flex flex-col border-r-2 border-lime-200 px-5 pt-5 bg-lime-50">
 
 		{#each MENU_LIST as menu}
 		<!-- svelte-ignore a11y_click_events_have_key_events -->
@@ -27,7 +27,7 @@
 
 	</div>
 
-	<div class="timeline w-full">
+	<div class="timeline w-full p-8">
 		{@render children()}
 	</div>
 </main>

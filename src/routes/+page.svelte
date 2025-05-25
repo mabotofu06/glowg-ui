@@ -1,13 +1,9 @@
-<script lang="ts">
-	import { Datepicker } from 'svelte-calendar';  let selectedDate = new Date();
-</script>
-
 <div class="flex h-full">
   <div class="flex flex-col w-full h-full overflow-y-auto mx-3">
-    <div class="post border border-lime-400 bg-lime-50 w-[700px] h-[500px] mb-5 rounded-3xl"></div>
-    <div class="post border border-lime-400 bg-lime-50 w-[700px] h-[500px] mb-1 rounded-3xl"></div>
-    <div class="post border border-lime-400 bg-lime-50 w-[700px] h-[500px] mb-1 rounded-3xl"></div>
-    <div class="post border border-lime-400 bg-lime-50 w-[700px] h-[500px] mb-1 rounded-3xl"></div>
+    {#each cardDataList as cardData}
+      <PostCard {cardData}/>
+    {/each}
+
     <!-- Svelteカレンダーコンポーネント例（svelte-calendarなどを使う場合） -->
   </div>
 
@@ -19,3 +15,11 @@
 
 </div>
 
+<script lang="ts">
+	import { Datepicker } from 'svelte-calendar';  let selectedDate = new Date();
+  import PostCard from '$lib/components/molecules/PostCard.svelte';
+  import type { PostData } from '$lib/types/data';
+  import { mockPosts } from '$lib/mocks/data';
+
+  let cardDataList: PostData[] = mockPosts;
+</script>

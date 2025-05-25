@@ -20,7 +20,7 @@
   </div>
 
   <div class="mt-10 mx-20">
-    <div class="flex border-b border-gray-300 mb-4">
+    <div class="flex border-b border-gray-300 mb-10">
       {#each MENU_LIST as menu}
         <button
           class={"px-6 py-2 focus:outline-none" + (activeTab === menu.code ? '  text-lime-500 border-b-2 border-lime-500' : '  text-gray-500')}
@@ -32,10 +32,10 @@
       {/each}
     </div>
 
-    <div class="min-h-130">
+    <div class="h-200 mx-10 overflow-scroll">
     {#if activeTab === '0000'}
-      {#each [1,2,3,4,5] as num}
-        <PostCard/>
+      {#each cardDataList as data}
+        <PostCard cardData={data}/>
       {/each}
     {:else if activeTab === '0001'}
       <div>
@@ -59,11 +59,13 @@
 <script lang="ts">
   import { onMount } from 'svelte';
   import { page } from '$app/stores';
-    import PostCard from '$lib/components/molecules/PostCard.svelte';
+  import PostCard from '$lib/components/molecules/PostCard.svelte';
+  import type { PostData } from '$lib/types/data';
+  import { mockPosts } from '$lib/mocks/data';
  
-  let selectedDate = new Date();
   let userId: string;
   let activeTab: string = '0000';
+  const cardDataList: Array<PostData> = [];
 
   $: userId = $page.params.id;
 
@@ -73,5 +75,12 @@
     { label: '作業終了した投稿', code: '0002' },
     { label: 'フォロー中の作業投稿', code: '0003' }
   ];
+
+  $: if (userId && activeTab === '0000') {
+    cardDataList.length = 0;
+    mockPosts.filter(post => post.postOwner.id === userId).forEach(post => {
+      cardDataList.push(post);
+    });
+  }
 
 </script>
