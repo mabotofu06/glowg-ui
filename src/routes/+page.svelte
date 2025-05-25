@@ -20,6 +20,11 @@
   import PostCard from '$lib/components/molecules/PostCard.svelte';
   import type { PostData } from '$lib/types/data';
   import { mockPosts } from '$lib/mocks/data';
+  import {signInWithProvider} from '$lib/supabase/auth';
+  
 
+  function loginWithGoogle() {
+    signInWithProvider('google');
+  }
   let cardDataList: PostData[] = mockPosts;
 </script>
