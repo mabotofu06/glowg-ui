@@ -75,6 +75,7 @@
   import { createEventDispatcher } from 'svelte';
   import { supabase } from '$lib/supabase/client';
   import { openPostModal } from '$lib/stores/state';
+    import { uploadFile } from '$lib/supabase/postClient';
 
   const dispatch = createEventDispatcher();
 
@@ -83,10 +84,41 @@
   let error: string | null = null;
   let imagePreview: string | null = null;
   let fileInput: HTMLInputElement | null = null;
+  let imageFiles: File[] = [];
+  let imagePreviews: string[] = [];
+
+  // fileInput から imageFiles に変換する関数
+  function syncImageFilesFromInput() {
+    if (fileInput && fileInput.files && fileInput.files.length > 0) {
+      imageFiles = Array.from(fileInput.files).slice(0, 4);
+    } else {
+      imageFiles = [];
+    }
+  }
 
   async function submitPost() {
     loading = true;
     error = null;
+
+    if(!imageFiles.length){
+      error = '画像を選択してください。';
+      loading = false;
+      return;
+    }
+
+    const filePathList = await Promise.all(imageFiles.map(async file => {
+      return await uploadFile(file, '');      
+    }));
+
+    if (filePathList.some(path => path === null)) {
+      error = '画像のアップロードに失敗しました。';
+      loading = false;
+      return;
+    }
+
+    
+
+
     // 投稿処理（例: supabaseにinsert）
     const { error: insertError } = await supabase
       .from('posts')
