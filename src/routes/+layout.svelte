@@ -1,9 +1,5 @@
-<header class="bg-white text-lime-700 text-4xl p-6 border-b border-lime-700">
+<header class="bg-white text-lime-700 text-5xl p-6 border-b border-lime-700">
 	<h1>
-	<svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 inline-block mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-		<path d="M12 2L2 7l10 5 10-5L12 2z"></path>
-		<path d="M2 17l10 5 10-5V7L12 12 2 7v10z"></path>
-	</svg>
 	<span style="font-family: 'Segoe Print', cursive; font-weight: bold; letter-spacing: 0.03em;">glowG</span>
 	</h1>
 </header>
@@ -32,6 +28,7 @@
 	</div>
 
 	<!-- 投稿ボタン（右下固定） -->
+	<!-- svelte-ignore event_directive_deprecated -->
 	<button
 		class="fixed bottom-8 right-8 bg-lime-500 hover:bg-lime-600 text-white rounded-full shadow-lg w-16 h-16 flex items-center justify-center text-3xl z-5"
 		aria-label="投稿"
