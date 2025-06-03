@@ -12,7 +12,7 @@
 		<!-- svelte-ignore a11y_click_events_have_key_events -->
 		<!-- svelte-ignore event_directive_deprecated -->
 		<div
-			class="flex justify-center items-center w-18 h-18 bg-lime-300 rounded-full mb-5 text-green-700"
+			class="flex justify-center items-center w-18 h-18 bg-lime-300 rounded-full mb-5 text-green-700 hover:opacity-50"
 			on:click={() => onMenuClick(menu.path)}
 		>
 			<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-8">
