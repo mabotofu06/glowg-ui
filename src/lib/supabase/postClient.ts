@@ -1,7 +1,8 @@
+import type { TimelinePostDto } from '$lib/types/dto';
 import { supabase } from './client'; // supabaseクライアントのインスタンスをインポート
 
 // タイムラインポスト取得API
-export async function getTimelinePosts(getNum: number = 30) {
+export async function getTimelinePosts(getNum: number = 30): Promise<Array<TimelinePostDto>> {
   const { data, error } = await supabase
     .from('tbl_timeline_posts') // テーブル名: posts
     .select('*')
@@ -11,7 +12,7 @@ export async function getTimelinePosts(getNum: number = 30) {
   if (error) {
     throw error;
   }
-  return data;
+  return data as Array<TimelinePostDto>;
 }
 
 //ポスト詳細取得API
