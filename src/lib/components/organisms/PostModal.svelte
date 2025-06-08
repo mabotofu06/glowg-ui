@@ -15,6 +15,11 @@
         rows="5"
         placeholder="今日はこんな作業をしました"
         required
+        on:input={() => {
+          if (content.length > 500) {
+            content = content.slice(0, 500);
+          }          
+        }}
       ></textarea>
       <div class="flex flex-col items-center gap-2">
         <label
@@ -60,6 +65,7 @@
           type="submit"
           class="px-4 py-2 rounded-lg bg-lime-600 text-white font-bold hover:bg-lime-700 transition"
           disabled={loading}
+          on:click={submitPost}
         >
           {loading ? '投稿中...' : '投稿'}
         </button>
@@ -75,7 +81,8 @@
   import { createEventDispatcher } from 'svelte';
   import { supabase } from '$lib/supabase/client';
   import { openPostModal } from '$lib/stores/state';
-    import { uploadFile } from '$lib/supabase/postClient';
+    import { insertMainPost, uploadFile } from '$lib/supabase/postClient';
+    import type { PostInsertDto } from '$lib/types/dto';
 
   const dispatch = createEventDispatcher();
 
@@ -100,39 +107,40 @@
     loading = true;
     error = null;
 
-    if(!imageFiles.length){
-      error = '画像を選択してください。';
-      loading = false;
-      return;
+    // if(!imageFiles.length){
+    //   error = '画像を選択してください。';
+    //   loading = false;
+    //   return;
+    // }
+
+    // const filePathList = await Promise.all(imageFiles.map(async file => {
+    //   return await uploadFile(file, '');      
+    // }));
+
+    // if (filePathList.some(path => path === null)) {
+    //   error = '画像のアップロードに失敗しました。';
+    //   loading = false;
+    //   return;
+    // }
+
+    const postData: PostInsertDto = {
+      user_id: '@ui_user', // ユーザーID
+      user_name: 'UIテストユーザー', // ユーザー名
+      user_icon: '', // ユーザーアイコンURL
+
+      contents: content, // ポスト内容
+      file_path1: '', // ポスト画像URL
+      file_path2: '', // ポスト画像URL
+      file_path3: '', // ポスト画像URL
+      file_path4: '' // ポスト画像URL
     }
-
-    const filePathList = await Promise.all(imageFiles.map(async file => {
-      return await uploadFile(file, '');      
-    }));
-
-    if (filePathList.some(path => path === null)) {
-      error = '画像のアップロードに失敗しました。';
-      loading = false;
-      return;
-    }
-
     
+    const res = insertMainPost(postData);
 
-
-    // 投稿処理（例: supabaseにinsert）
-    const { error: insertError } = await supabase
-      .from('posts')
-      .insert([{ content }]);
+    console.log('投稿データ:', res);
+    
     loading = false;
-    if (insertError) {
-      error = '投稿に失敗しました。もう一度お試しください。';
-    } else {
-      content = '';
-      imagePreview = null;
-      if (fileInput) fileInput.value = '';
-      dispatch('posted');
-      closeModal();
-    }
+    closeModal();
   }
 
   function closeModal() {

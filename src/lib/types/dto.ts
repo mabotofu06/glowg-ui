@@ -22,6 +22,18 @@ export interface TimelinePostDto {
   deleted_at: string; // 削除日時
 }
 
+export interface PostInsertDto {
+  user_id: string; // ユーザーID
+  user_name: string; // ユーザー名
+  user_icon: string; // ユーザーアイコンURL
+
+  contents: string; // ポスト内容
+  file_path1: string; // ポスト画像URL
+  file_path2: string; // ポスト画像URL
+  file_path3: string; // ポスト画像URL
+  file_path4: string; // ポスト画像URL
+}
+
 export interface TimelineSubPostDto {
   parent_post_id: number; // 親ポストID
 

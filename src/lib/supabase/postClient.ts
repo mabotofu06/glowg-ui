@@ -1,4 +1,4 @@
-import type { TimelinePostDto } from '$lib/types/dto';
+import type { PostInsertDto, TimelinePostDto } from '$lib/types/dto';
 import { supabase } from './client'; // supabaseクライアントのインスタンスをインポート
 
 // タイムラインポスト取得API
@@ -45,7 +45,7 @@ export async function uploadFile(file: File, userId: string) {
 }
 
 /**ポスト新規投稿API */
-export async function insertMainPost(post: any){
+export async function insertMainPost(post: PostInsertDto) {
   const { data, error } = await supabase
     .from('tbl_timeline_posts') // テーブル名: posts
     .insert([post])

@@ -1,4 +1,6 @@
-<div class="post border border-lime-400 bg-lime-50 w-[700px] mb-5 rounded-3xl p-5">
+<!-- svelte-ignore a11y_click_events_have_key_events -->
+<!-- svelte-ignore a11y_no_static_element_interactions -->
+<div class="post border border-lime-400 bg-lime-50 w-[700px] mb-5 rounded-3xl p-5" on:click={navigateToPostPetail}>
   <div class="flex justify-between">
     <div class="flex items-center">
       <div class="w-22 h-22 bg-lime-400 rounded-full me-5">
@@ -131,6 +133,10 @@
   // export let favoNum: number = 1;
   // export let bookmarkNum: number = 1;
   // export let subPostIds: string[] = ['2', '3', '4'];
+
+  const navigateToPostPetail = ()=>{
+    window.location.href = `/post/${cardData.id}`;
+  }
 
 </script>
 

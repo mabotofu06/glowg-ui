@@ -19,10 +19,9 @@
 	import { Datepicker } from 'svelte-calendar';  let selectedDate = new Date();
   import PostCard from '$lib/components/molecules/PostCard.svelte';
   import type { PostData } from '$lib/types/data';
-  import { mockPosts } from '$lib/mocks/data';
   import {signInWithProvider} from '$lib/supabase/auth';
-    import { onMount } from 'svelte';
-    import { getTimelinePosts } from '$lib/supabase/postClient';
+  import { onMount } from 'svelte';
+  import { getTimelinePosts } from '$lib/supabase/postClient';
   
 
   function loginWithGoogle() {
@@ -31,6 +30,13 @@
   let postDataList: PostData[];
 
   onMount(async ()=>{
+    postDataList = JSON.parse(sessionStorage.getItem('timeline_posts') ?? '{}');
+
+    if (postDataList && postDataList.length > 0) {
+      console.log('Loaded posts from sessionStorage:', postDataList);
+      return;
+    }
+
     postDataList = (await getTimelinePosts()).map((post) => ({
       id: String(post.post_id),
       userId: post.user_id,
@@ -48,5 +54,6 @@
       // Add any other required fields with defaults as needed
     }));
     console.log('Fetched posts:', postDataList);
+    sessionStorage.setItem('timeline_posts', JSON.stringify(postDataList));
   })
 </script>
