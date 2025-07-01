@@ -1,5 +1,5 @@
 <div class="flex h-full">
-  <div class="flex flex-col w-full h-full overflow-y-auto mx-3">
+  <div class="flex flex-col w-full h-full mx-3 overflow-y-scroll">
     {#each postDataList as cardData}
       <PostCard {cardData}/>
     {/each}

@@ -1,62 +1,8 @@
 <div class="w-full h-full overflow-y-auto bg-white">
-  <div class="main-post bg-lime-100 p-5 rounded-2xl">
-    <div class="header flex justify-between mb-5">
-      <div class="flex">
-        <div class="bg-lime-300 h-16 w-16 rounded-full"></div>
-        <div class="flex flex-col mx-3">
-          <span class="text-2xl">テストユーザー</span>
-          <span class="">@test_user</span>
-        </div>
-      </div>
-
-      <span>2024/01/23 12:34:56</span>
-    </div>
-
-    <div class="content min-h-48 mb-5">
-      テスト投稿１<br/>
-      作業中
-    </div>
-
-    <div class="footer flex">
-      <div class="view flex items-center">
-        <div class="bg-lime-300 h-8 w-8 rounded-full"></div>
-        <span class="mx-3">100</span>
-      </div>
-
-      <div class="like flex items-center">
-        <div class="bg-lime-300 h-8 w-8 rounded-full"></div>
-        <span class="mx-3">5</span>
-      </div>
-
-      <div class="bookmark flex items-center">
-        <div class="bg-lime-300 h-8 w-8 rounded-full"></div>
-        <span class="mx-3">10</span>
-      </div>
-    </div>
-  </div>
+  <PostCard cardData={postData}/>
 
   {#each mockSubPostList as subPost}
-  <div class="sub-post bg-lime-50 ms-5 p-5 mt-3">
-    <div class="header flex justify-between mb-5">
-      <span>{subPost.postDatetime}</span>
-    </div>
-
-    <div class="content min-h-32 mb-5">
-      {subPost.contents}
-    </div>
-
-    <div class="footer flex">
-      <div class="view flex items-center">
-        <div class="bg-lime-300 h-8 w-8 rounded-full"></div>
-        <span class="mx-3">{subPost.viewNum}</span>
-      </div>
-
-      <div class="like flex items-center">
-        <div class="bg-lime-300 h-8 w-8 rounded-full"></div>
-        <span class="mx-3">{subPost.likeNum}</span>
-      </div>
-    </div>
-  </div>
+  <SubPostCard/>
   {/each}
 
   {#if isAuther}
@@ -67,7 +13,7 @@
   </div>
   {/if}
 
-  {#if openModal}
+  <!-- {#if openModal}
   <div class="overlay flex items-center justify-center">
 
     <div class="sub-post-modal bg-white w-96 rounded-lg p-5">
@@ -90,11 +36,14 @@
     </div>
 
   </div>
-  {/if}
+  {/if} -->
 </div>
 
 <script lang="ts">
   import { page } from "$app/stores";
+  import PostCard from "$lib/components/molecules/PostCard.svelte";
+    import SubPostCard from "$lib/components/molecules/SubPostCard.svelte";
+    import { onMount } from "svelte";
 
   const loginUser = {
     id: "@test_user",
@@ -105,12 +54,17 @@
   let postId: string;
   let isAuther:boolean = true;
   let openModal: boolean = true;
+   let postData: any = {}; // 初期値を空オブジェクトに
+
   $: postId = $page.params.id;
 
+  onMount(() => {
+    postData = JSON.parse(sessionStorage.getItem(postId) ?? '{}');
+  });
   const mockSubPostList = [{
     id: "sub1",
     contents: "サブ投稿の内容",
-    img: "",
+    img: "https://www.witstudio.co.jp/news/kiracard_sample.jpg",
     viewNum: 50,
     likeNum: 2,
     isLiked: false,
@@ -118,7 +72,7 @@
   },{
     id: "sub2",
     contents: "別のサブ投稿の内容",
-    img: "",
+    img: "https://animekabegami.com/image_wallpaper/1672489990.jpg",
     viewNum: 30,
     likeNum: 1,
     isLiked: false,
