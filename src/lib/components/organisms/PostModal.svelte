@@ -7,7 +7,9 @@
     on:dragover|preventDefault={handleDragOver}
     on:drop|preventDefault={handleDrop}
   >
-    <h2 class="text-2xl font-bold mb-4 text-lime-700">新しい投稿</h2>
+    <h2 class="text-2xl font-bold mb-4 text-lime-700">
+      {type ==="new" ? "新しい投稿" : "投稿を追加"}
+    </h2>
     <form on:submit|preventDefault={submitPost} class="flex flex-col gap-4">
       <textarea
         bind:value={content}
@@ -78,14 +80,11 @@
 </div>
 
 <script lang="ts">
-  import { createEventDispatcher } from 'svelte';
-  import { supabase } from '$lib/supabase/client';
   import { openPostModal } from '$lib/stores/state';
-    import { insertMainPost, uploadFile } from '$lib/supabase/postClient';
-    import type { PostInsertDto } from '$lib/types/dto';
+  import { insertMainPost, uploadFile } from '$lib/supabase/postClient';
+  import type { PostInsertDto } from '$lib/types/dto';
 
-  const dispatch = createEventDispatcher();
-
+  export let type: "new"|"add" = "new";
   let content = '';
   let loading = false;
   let error: string | null = null;
@@ -103,6 +102,7 @@
     }
   }
 
+  //TODO:タイプによって処理を分ける
   async function submitPost() {
     loading = true;
     error = null;

@@ -1,5 +1,4 @@
 <div>
-
   <div class="mb-5 border-b border-gray-300 flex items-center">
     {#each MENU_LIST as menu}
     <button
@@ -9,10 +8,12 @@
     {/each}
   </div>
 
+  <div class="w-full">
   <PostCard
     cardData={onWorkData[0]}
   />
-8</div>
+  </div>
+</div>
 
 <script lang="ts">
   import PostCard from "$lib/components/molecules/PostCard.svelte";

@@ -1,4 +1,4 @@
-<div class="w-full h-full overflow-y-auto bg-white">
+<div class="w-full bg-white">
   <PostCard cardData={postData}/>
 
   {#each mockSubPostList as subPost}
@@ -6,43 +6,26 @@
   {/each}
 
   {#if isAuther}
-  <div class="add-sub-post bg-lime-50 ms-5 p-5 mt-3">
-    <button class="w-full h-full text-center text-lg text-lime-600">
-      投稿
+    <button class="w-full py-3 bg-lime-100 text-center text-lg text-lime-600 hover:bg-lime-200 rounded-lg hover:shadow-lg"
+      on:click={() => $openPostModal = true}
+    >
+      投稿を追加
     </button>
-  </div>
   {/if}
 
-  <!-- {#if openModal}
-  <div class="overlay flex items-center justify-center">
-
-    <div class="sub-post-modal bg-white w-96 rounded-lg p-5">
-      <div class="header">
-        <h2 class="text-xl mb-3">モーダルタイトル</h2>
-      </div>
-
-      <div class="main">
-        <p>ここにモーダルの内容が入ります。</p>
-      </div>
-
-      <div class="footer mt-5 justify-between flex">
-        <button class="bg-lime-500 text-white px-4 py-2 rounded" on:click={() => openModal = false}>
-          閉じる
-        </button>
-        <button class="bg-lime-300 text-white px-4 py-2 rounded ms-3" on:click={() => openModal = false}>
-          投稿
-        </button>
-      </div>
-    </div>
-
-  </div>
-  {/if} -->
+  {#if $openPostModal}
+	<div class="overlay">
+		<PostModal type="add"/>
+	</div>
+  {/if}
 </div>
 
 <script lang="ts">
   import { page } from "$app/stores";
   import PostCard from "$lib/components/molecules/PostCard.svelte";
     import SubPostCard from "$lib/components/molecules/SubPostCard.svelte";
+    import PostModal from "$lib/components/organisms/PostModal.svelte";
+    import { openPostModal } from "$lib/stores/state";
     import { onMount } from "svelte";
 
   const loginUser = {

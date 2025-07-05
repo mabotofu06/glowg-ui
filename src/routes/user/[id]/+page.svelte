@@ -32,7 +32,7 @@
       {/each}
     </div>
 
-    <div class="h-200 mx-10 overflow-scroll">
+    <div class="flex flex-col w-full h-200 overflow-scroll">
     {#if activeTab === '0000'}
       {#each cardDataList as data}
         <PostCard cardData={data}/>
@@ -57,7 +57,6 @@
 </div>
 
 <script lang="ts">
-  import { onMount } from 'svelte';
   import { page } from '$app/stores';
   import PostCard from '$lib/components/molecules/PostCard.svelte';
   import type { PostData } from '$lib/types/data';
