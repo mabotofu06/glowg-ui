@@ -1,4 +1,4 @@
-<div class="post-card relative inline-block border border-lime-400 w-[700px] min-h-[200px] mb-5 rounded-3xl overflow-hidden">
+<div class={"post-card relative inline-block border border-lime-400 w-full min-h-[200px] mb-5 rounded-3xl overflow-hidden" + (className!==""? ` ${className}` : '')}>
   <div class="absolute left-0 right-0 top-0 h-fit">
     <PostCardHeader/>
   </div>
@@ -17,10 +17,11 @@
 </div>
 
 <script lang="ts">
-    import type { PostData } from "$lib/types/data";
-    import PostCardFooter from "./PostCardFooter.svelte";
-    import PostCardHeader from "./PostCardHeader.svelte";
+  import type { PostData } from "$lib/types/data";
+  import PostCardFooter from "./PostCardFooter.svelte";
+  import PostCardHeader from "./PostCardHeader.svelte";
 
+  export let className: string = '';
   let like = false;
   let bookmark = false;
   let open = false;
@@ -47,6 +48,9 @@
   }
 
   const navigateToPostPetail = () => {
+    if(window.location.pathname !== '/') {
+      return;
+    }
     // セッションストレージにポストデータを保存
     sessionStorage.setItem(`${cardData.id}`, JSON.stringify(cardData));
     window.location.href = `/post/${cardData.id}`;

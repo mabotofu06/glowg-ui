@@ -8,7 +8,6 @@
   <img
     src={subPostData.img}
     class="w-full h-full object-cover rounded-3xl hover:cursor-pointer"
-    on:click={navigateToPostPetail}
   />
 
   <div class="absolute left-0 right-0 bottom-0 pointer-events-auto">
@@ -54,28 +53,4 @@ import SubPostCardFooter from "./SubPostCardFooter.svelte";
     isLiked: false,
     isBookmarked: false,
   }
-
-  // export let postId: string = '1';
-  // export let postContent: string = '投稿内容投稿内容投稿内容投稿内容投稿内容投稿内容投稿内容投稿内容投稿内容投稿内容';
-  // export let userInfo: UserInfo = {id: 'test_user', name: 'テストユーザ-', icon: 'https://example.com/icon.png'};
-  // export let postDatetime: string = '2025-06-01 12:34:56';
-  // export let doneWork: boolean = false;
-  // export let viewer: number = 1;
-  // export let favoNum: number = 1;
-  // export let bookmarkNum: number = 1;
-  // export let subPostIds: string[] = ['2', '3', '4'];
-
-  const navigateToPostPetail = () => {
-    // セッションストレージにポストデータを保存
-    sessionStorage.setItem(`${cardData.id}`, JSON.stringify(cardData));
-    window.location.href = `/post/${cardData.id}`;
-  }
-
 </script>
-
-  <style>
-    .fadeout {
-      background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgb(247 254 231) 100%);
-    }
-  </style>
-
