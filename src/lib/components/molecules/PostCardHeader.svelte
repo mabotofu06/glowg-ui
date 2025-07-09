@@ -1,6 +1,6 @@
 <div class="post-card-header flex justify-between rounded-full py-3">
   <div class="flex items-center">
-    <div class="w-16 h-16 bg-lime-400 rounded-full mx-5">
+    <div class="w-12 h-12 bg-lime-400 rounded-full mx-5">
       <img src={cardData.postOwner.iconImg} alt="User Icon" class="w-full h-full rounded-full object-cover">
     </div>
 
@@ -15,7 +15,7 @@
     {cardData.postDatetime}
     </span>
 
-    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class={"size-15 me-5" + (cardData.completed ? ' text-lime-500' : ' text-gray-300')}>
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class={"size-10 me-5" + (cardData.completed ? ' text-lime-500' : ' text-gray-300')}>
       <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
     </svg>
   </div>

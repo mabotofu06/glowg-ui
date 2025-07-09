@@ -23,10 +23,10 @@
 <script lang="ts">
   import { page } from "$app/stores";
   import PostCard from "$lib/components/molecules/PostCard.svelte";
-    import SubPostCard from "$lib/components/molecules/SubPostCard.svelte";
-    import PostModal from "$lib/components/organisms/PostModal.svelte";
-    import { openPostModal } from "$lib/stores/state";
-    import { onMount } from "svelte";
+  import SubPostCard from "$lib/components/molecules/SubPostCard.svelte";
+  import PostModal from "$lib/components/organisms/PostModal.svelte";
+  import { openPostModal } from "$lib/stores/state";
+  import { onMount } from "svelte";
 
   const loginUser = {
     id: "@test_user",

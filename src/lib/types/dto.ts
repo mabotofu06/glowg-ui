@@ -53,3 +53,11 @@ export interface TimelineSubPostDto {
   created_at: string; // 投稿日時
   deleted_at: string; // 削除日時
 }
+
+export interface SubPostInsertDto {
+  contents: string; // ポスト内容
+  file_path1: string; // ポスト画像URL
+  file_path2: string; // ポスト画像URL
+  file_path3: string; // ポスト画像URL
+  file_path4: string; // ポスト画像URL
+}

@@ -1,4 +1,4 @@
-import type { PostInsertDto, TimelinePostDto } from '$lib/types/dto';
+import type { PostInsertDto, SubPostInsertDto, TimelinePostDto, TimelineSubPostDto } from '$lib/types/dto';
 import { supabase } from './client'; // supabaseクライアントのインスタンスをインポート
 
 // タイムラインポスト取得API
@@ -58,7 +58,7 @@ export async function insertMainPost(post: PostInsertDto) {
 }
 
 /**ポスト追加投稿API */
-export async function insertSubPost(parentPost: any, subPost: any, completed: boolean = false) {
+export async function insertSubPost(parentPost: TimelinePostDto, subPost: SubPostInsertDto, completed: boolean = false) {
   const { data, error } = await supabase
     .from('tbl_timeline_sub_posts') // テーブル名: sub_posts
     .insert([subPost])
@@ -73,7 +73,7 @@ export async function insertSubPost(parentPost: any, subPost: any, completed: bo
   const { data: parentUpdateData, error: parentUpdateError } = await supabase
       .from('tbl_timeline_posts')
       .update({ sub_post_num: parentPost.sub_post_num, completed: completed })
-      .eq('id', parentPost.post_id)
+      .eq('post_id', parentPost.post_id)
       .select('*'); // 更新後のデータを取得
 
       if (parentUpdateError) {
