@@ -13,7 +13,7 @@
 		<!-- svelte-ignore a11y_click_events_have_key_events -->
 		<!-- svelte-ignore event_directive_deprecated -->
 		<button
-			class="flex items-center w-18 h-18 bg-lime-300 rounded-full mb-5 text-green-700 group relative cursor-pointer z-20 hover:bg-lime-200 hover:text-lime-300 transition"
+			class="flex items-center w-16 h-16 bg-lime-300 rounded-full mb-5 text-green-700 group relative cursor-pointer z-20 hover:bg-lime-200 hover:text-lime-300 transition"
 			on:click={() => onMenuClick(menu.path)}
 		>
 			<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-8 mx-auto">

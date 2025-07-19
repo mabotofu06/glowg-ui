@@ -1,7 +1,7 @@
-<div class="flex">
-  <div class="flex flex-col w-full mx-3">
+<div class="flex justify-center">
+  <div class="flex flex-col mx-3">
     {#each postDataList as cardData}
-      <PostCard {cardData} className="max-h-[700px]"/>
+      <PostCard {cardData} className="max-h-[700px] max-w-[800px]"/>
     {/each}
 
     <!-- Svelteカレンダーコンポーネント例（svelte-calendarなどを使う場合） -->

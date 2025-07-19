@@ -1,6 +1,12 @@
 <div class={"post-card relative inline-block border border-lime-400 w-full min-h-[200px] mb-5 rounded-3xl overflow-hidden" + (className!==""? ` ${className}` : '')}>
   <div class="absolute left-0 right-0 top-0 h-fit">
-    <PostCardHeader/>
+    <PostCardHeader
+      userId  ={cardData.postOwner?.id}
+      userName={cardData.postOwner?.name}
+      userIcon={cardData.postOwner?.iconImg}
+      datetime={cardData.postDatetime}
+      completed={cardData.completed}
+    />
   </div>
 
   <!-- svelte-ignore a11y_click_events_have_key_events -->
@@ -13,7 +19,7 @@
   />
 
   <div class="absolute left-0 right-0 bottom-0 pointer-events-auto">
-    <PostCardFooter/>
+    <PostCardFooter contents={cardData.contents}/>
   </div>
 
   <!-- svelte-ignore a11y_click_events_have_key_events -->
@@ -34,23 +40,16 @@
 </div>
 
 <script lang="ts">
+  import { postId } from "$lib/stores/state";
   import type { PostData } from "$lib/types/data";
   import PostCardFooter from "./PostCardFooter.svelte";
   import PostCardHeader from "./PostCardHeader.svelte";
 
   export let className: string = '';
-  let like = false;
-  let bookmark = false;
-  let open = false;
+  export let onClick: ()=>void = ()=>{};
 
   let showImageModal = false;
   let modalImageUrl = '';
-
-  interface UserInfo{
-    id: string;
-    name: string;
-    icon: string
-  }
 
   export let cardData: PostData = {
     id: '',
@@ -73,6 +72,7 @@
       return;
     }
     // セッションストレージにポストデータを保存
+    $postId = cardData.id;
     sessionStorage.setItem(`${cardData.id}`, JSON.stringify(cardData));
     window.location.href = `/post/${cardData.id}`;
   }

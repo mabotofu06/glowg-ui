@@ -1,4 +1,41 @@
+// export interface TimelinePostDto {
+//   post_id: number; // ポストID
+
+//   user_id: string; // ユーザーID
+//   user_name: string; // ユーザー名
+//   user_icon: string; // ユーザーアイコンURL
+
+//   contents: string; // ポスト内容
+//   contents_path: string; // ポストコンテンツURL
+//   completed: boolean; // 完了フラグ
+  
+//   view_num: number; // ビュー数
+//   like_num: number; // いいね数
+//   bookmark_num: number; // ブックマーク数
+
+//   delete_flag: boolean; // 削除フラグ
+//   created_at: string; // 投稿日時
+//   deleted_at: string; // 削除日時
+// }
+
+// export interface TimelineSubPostDto {
+//   post_id: number; // ポストID
+
+//   contents: string; // ポスト内容
+//   contents_path: string; // ポストコンテンツURL
+//   completed: boolean; // 完了フラグ
+  
+//   view_num: number; // ビュー数
+//   like_num: number; // いいね数
+//   bookmark_num: number; // ブックマーク数
+
+//   delete_flag: boolean; // 削除フラグ
+//   created_at: string; // 投稿日時
+//   deleted_at: string; // 削除日時
+// }
+
 export interface TimelinePostDto {
+  parent_post_id: number; // ポストID
   post_id: number; // ポストID
 
   user_id: string; // ユーザーID

@@ -59,14 +59,25 @@
         {/if}
       </div>
       <div class="flex justify-center items-center mb-4">
-        <label class="inline-flex items-center">
-          <input
-            type="checkbox"
-            class="form-checkbox h-5 w-5 text-lime-600 border-lime-300 rounded focus:ring-lime-500"
-            bind:checked={completed}
-          />
-          <span class="ml-2 text-gray-700">作業完了</span>
-        </label>
+        {#if type === "add"}
+        <button
+          type="button"
+          class="flex items-center gap-2 px-3 py-2 rounded-full border border-lime-300 bg-white hover:bg-lime-50 transition focus:outline-none"
+          aria-pressed={completed}
+          on:click={() => completed = !completed}
+        >
+          <span
+            class={`inline-block w-5 h-5 rounded-full border-2 ${completed ? 'bg-lime-500 border-lime-500' : 'bg-white border-lime-300'}`}
+          >
+            {#if completed}
+              <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
+              </svg>
+            {/if}
+          </span>
+          <span class="ml-1 text-gray-700">作業完了</span>
+        </button>
+        {/if}
       </div>
 
       <div class="flex justify-end gap-2 mt-2">
@@ -113,7 +124,7 @@
   const validationInput = ()=>{
     invalid = content.length === 0 || content.length > maxTextLength;
     invalid = invalid || !imagePreview;
-    console.log('入力の検証:', invalid);
+    console.log(content)
   }
 
   //TODO:タイプによって処理を分ける
@@ -170,6 +181,7 @@
     console.log('投稿データ:', res);
     loading = false;
     closeModal();
+    sessionStorage.removeItem("timeline_posts");
     return;
   }
 

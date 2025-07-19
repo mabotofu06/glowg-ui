@@ -1,8 +1,8 @@
 <div class="w-full bg-white">
   <PostCard cardData={postData}/>
 
-  {#each mockSubPostList as subPost}
-  <SubPostCard/>
+  {#each subPostList as subPost}
+  <SubPostCard cardData={subPost}/>
   {/each}
 
   {#if isAuther}
@@ -26,6 +26,7 @@
   import SubPostCard from "$lib/components/molecules/SubPostCard.svelte";
   import PostModal from "$lib/components/organisms/PostModal.svelte";
   import { openPostModal } from "$lib/stores/state";
+    import { getSubPostsByPostId } from "$lib/supabase/postClient";
   import { onMount } from "svelte";
 
   const loginUser = {
@@ -37,12 +38,24 @@
   let postId: string;
   let isAuther:boolean = true;
   let openModal: boolean = true;
-   let postData: any = {}; // 初期値を空オブジェクトに
+  let postData: any = {}; // 初期値を空オブジェクトに
+
+  let subPostList: any[] = []; // サブ投稿のリスト
 
   $: postId = $page.params.id;
 
-  onMount(() => {
+  onMount(async () => {
     postData = JSON.parse(sessionStorage.getItem(postId) ?? '{}');
+    subPostList = await getSubPostsByPostId(postId);
+    subPostList = subPostList.map((subPost) => ({
+      id: String(subPost.sub_post_id),
+      contents: subPost.contents,
+      img: subPost.file_path1 || '', // 画像がない場合は空文字
+      postDatetime: subPost.created_at,
+      likeNum: subPost.like_num ?? 0,
+      isLiked: false, // 初期値は未いいね
+    }));
+    console.log('Fetched sub posts:', subPostList);
   });
   const mockSubPostList = [{
     id: "sub1",
