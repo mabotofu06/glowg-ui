@@ -13,7 +13,7 @@
 		<!-- svelte-ignore a11y_click_events_have_key_events -->
 		<!-- svelte-ignore event_directive_deprecated -->
 		<button
-			class="flex items-center w-18 h-18 bg-lime-300 rounded-full mb-5 text-green-700 group relative cursor-pointer z-20 hover:bg-lime-200 hover:text-lime-300 transition"
+			class="flex items-center w-16 h-16 bg-lime-300 rounded-full mb-5 text-green-700 group relative cursor-pointer z-20 hover:bg-lime-200 hover:text-lime-300 transition"
 			on:click={() => onMenuClick(menu.path)}
 		>
 			<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-8 mx-auto">
@@ -47,7 +47,7 @@
 </main>
 </div>
 
-{#if !$isLogin}
+{#if $isLogin === false}
 	<div class="overlay">
 		<LoginModal />
 	</div>
@@ -77,11 +77,6 @@
 		window.location.href = path
 	};
 
-	const isTop = ()=>{
-		if(!window) return false;
-		return window.location.pathname === '/';
-	}
-
 	const MENU_LIST = [
 		{label: 'Home'          , path: '/'               , path_d: 'm2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25'},
 		{label: 'Bookmark'      , path: ''                , path_d: 'M6.32 2.577a49.255 49.255 0 0 1 11.36 0c1.497.174 2.57 1.46 2.57 2.93V21a.75.75 0 0 1-1.085.67L12 18.089l-7.165 3.583A.75.75 0 0 1 3.75 21V5.507c0-1.47 1.073-2.756 2.57-2.93Z'   },
@@ -103,6 +98,6 @@
 		width: 100%;
 		height: 100%;
 		background-color: rgba(0, 0, 0, 0.5);
-		z-index: 10;
+		z-index: 100;
 	}
 </style>

@@ -1,4 +1,4 @@
-import { isLoading, isLogin } from '$lib/stores/state';
+import { isLoading, isLogin, postId } from '$lib/stores/state';
 import type { Reroute } from '@sveltejs/kit';
 
 export const reroute: Reroute = async ({ url, fetch }) => {
@@ -16,5 +16,8 @@ export const reroute: Reroute = async ({ url, fetch }) => {
   else{
     isLogin.set(true);
   }
-  
+
+  if(!/\/post\//.test(url.pathname)){
+    postId.set(null);
+  }
 };

@@ -1,5 +1,14 @@
-import type { PostInsertDto, TimelinePostDto } from '$lib/types/dto';
+import type { PostInsertDto, SubPostInsertDto, TimelinePostDto, TimelineSubPostDto } from '$lib/types/dto';
 import { supabase } from './client'; // supabaseクライアントのインスタンスをインポート
+
+const MST_INDEX = {
+  TIMELINE_POSTS    : 'tbl_timeline_posts',
+  TIMELINE_SUB_POSTS: 'tbl_timeline_sub_posts',
+}
+
+const BUKET_NAME = {
+  POST_IMAGES: 'post-images',
+}
 
 // タイムラインポスト取得API
 export async function getTimelinePosts(getNum: number = 30): Promise<Array<TimelinePostDto>> {
@@ -16,12 +25,12 @@ export async function getTimelinePosts(getNum: number = 30): Promise<Array<Timel
 }
 
 //ポスト詳細取得API
-export async function getSubPostsByPostId(postId: number) {
+export async function getSubPostsByPostId(postId: string) {
   const { data, error } = await supabase
     .from('tbl_timeline_sub_posts') // テーブル名: sub_posts
     .select('*')
     .eq('parent_post_id', postId) // post_idでフィルタリング
-    .order('post_order', { ascending: false }); // 並び順
+    .order('created_at', { ascending: false }); // 並び順
   if (error) {
     throw error;
   }
@@ -58,7 +67,7 @@ export async function insertMainPost(post: PostInsertDto) {
 }
 
 /**ポスト追加投稿API */
-export async function insertSubPost(parentPost: any, subPost: any, completed: boolean = false) {
+export async function insertSubPost(parentPost: TimelinePostDto, subPost: SubPostInsertDto, completed: boolean = false) {
   const { data, error } = await supabase
     .from('tbl_timeline_sub_posts') // テーブル名: sub_posts
     .insert([subPost])
@@ -73,10 +82,10 @@ export async function insertSubPost(parentPost: any, subPost: any, completed: bo
   const { data: parentUpdateData, error: parentUpdateError } = await supabase
       .from('tbl_timeline_posts')
       .update({ sub_post_num: parentPost.sub_post_num, completed: completed })
-      .eq('id', parentPost.post_id)
+      .eq('post_id', parentPost.post_id)
       .select('*'); // 更新後のデータを取得
 
-      if (parentUpdateError) {
+  if (parentUpdateError) {
     throw parentUpdateError;
   }
 

@@ -1,44 +1,33 @@
 <!-- svelte-ignore a11y_click_events_have_key_events -->
 <!-- svelte-ignore a11y_no_static_element_interactions -->
-<div class={"post-card-footer flex-col w-full items-center mt-1 p-3" + (openContents ? ' rounded-5xl' : ' rounded-full')}
->
+<div class={
+  "post-card-footer flex-col w-full items-center mt-1 px-3" +
+  (openContents ? ' rounded-5xl' : ' rounded-full')
+}>
   {#if openContents}
-  <div class="text-xl">
-    てすとてすとてすとて
-    すとてすとてすとてす
-    とてすとてすとてすと
-    てすとてすとてすとて
-    すとてすとてすとてす
-    とてすとてすとてすと
-    てすとてすとてすとて
-    すとてすとてすとてす
-    とてすとてすとてすと
-    てすとてすとてすとて
-    すとてすとてすとてす
-    とてすとてすとてすと
-    てすとてすとてすとて
-    すとてすとてすとてす
-    とてすとてすとてすと
-  </div>
+  <div class="text-xl py-5">{@html contents.replace(/\n/g, "<br>")}</div>
   {/if}
 
   <div class="flex justify-between text-lime-700">
   <div class="flex items-center">
+    {#if type === "main"}
     <div class="flex items-center">
       <ViewIcon/>
       {cardData.viewNum}
     </div>
+    {/if}
 
     <div class="flex items-center ms-5">
       <LikeButton/>
       {cardData.likeNum}
     </div>
 
+    {#if type === "main"}
     <div class="flex items-center ms-5 me-10">
       <BookmarkButton/>
       {cardData.bookmarkNum}
     </div>
-
+    {/if}
     <VerticalToggleButton bind:isUp={openContents}/>
   </div>
 
@@ -54,9 +43,11 @@
 import type { PostData } from "$lib/types/data";
 import BookmarkButton from "../atoms/BookmarkButton.svelte";
 import LikeButton from "../atoms/LikeButton.svelte";
-    import VerticalToggleButton from "../atoms/VerticalToggleButton.svelte";
-    import ViewIcon from "../atoms/ViewIcon.svelte";
+import VerticalToggleButton from "../atoms/VerticalToggleButton.svelte";
+import ViewIcon from "../atoms/ViewIcon.svelte";
 
+export let type: "main" | "sub" = "main";
+export let contents: string = '';
 let openContents = false;
 
 let like = false;
